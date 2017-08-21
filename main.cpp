@@ -1,29 +1,29 @@
 #include<iostream>
-#include<cmath>
-#include<iomanip>
 using namespace std;
-
-int main(){
-	double newton(double, double, double, double);
-	double a, b, c, d;  //方程变量系数；
-	cout << "input 系数a,b,c,d:";
-	cin >> a >> b >> c >> d;
-	cout << endl;
-	cout << "方程一个解为x=" << setw(6) << setprecision(5) << newton(a, b, c, d);  //控制小数点后的位数（输出格式）
+int main()
+{
+	int i, k, m, n, num[50], *p;
+	cout << "input the number of person :n=";
+	cin >> n;
+	p = num;
+	for (i = 0; i < n; i++)
+	{
+		*(p+i) = i + 1;   //每个人进行编号;p+i==p++;最后输出的是序号
+	}
+	i = 0;
+	k = 0;
+	m = 0;
+	while (m < n - 1)
+	{
+		if (*(p + i) != 0) k++;              //报一次数，计数加1；
+		if (k == 3) { *(p + i) = 0; k = 0; m++; }//如果报数计数到达3次则计数次数置0，下一次重新开始；m为已经退出的人数；
+		i++;
+		if (i == n) i = 0;      //一圈报数结束，则初始化计数，从新开始；
+	}
+	while (*p == 0)p++;  //搜索未被标记为0的人的编号；并输出
+	cout << "The last one number is:" << *p;
 
 	system("pause");
 	return 0;
-}
 
-double newton(double a, double b, double c, double d)
-{
-	double x = 1, x0, f, f1;
-	do
-	{
-		x0 = x;  //因为是求在1附近的一个根，所以初始化变量x为1；
-		f = ((a*x0 + b)*x0 + c)*x0 + d;  //原函数值
-		f1 = (3 * x0 + 2 * b)*x0 + c;   // 微分值
-		x = x0 - f / f1;               //函数变量迭代
-	} while (fabs(x - x0) >= 1e-5);   //牛顿方程解算迭代结束条件；
-	return x;
 }
