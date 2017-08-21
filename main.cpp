@@ -1,47 +1,33 @@
 #include<iostream>
-#include<cmath>          //math.h是c语言的库函数；cmath.h是c++语言的库函数，但是C++也兼容math.h;
 using namespace std;
 
 int main()
 {
-	void godbahe(int);   //先声明   哥赫巴德猜想：一个不小于6的偶数可以表示为2个素数之和；
+	void hanoi(int n, char one, char two, char three);//汉诺塔程序是递归精神的完全体现；
+	int m;
+	cout << "input the number 0f disks:";
+	cin >> m;
 
-	int n;
-	cout << "input n:";
-	cin >> n;
-	godbahe(n);         //后调用
-	 
+	cout << "the steps of moveing " << m << "disks:" << endl;
+	hanoi(m, 'A', 'B', 'C');
+
 	system("pause");
 	return 0;
-
 }
 
-void godbahe(int n)   //外定义
+void hanoi(int n, char one, char two, char three)
 {
-	bool prime(int m);  //先声明！！！
-	int a, b;
-	for (a = 3; a <= n / 2; a = a + 2)
+	void move(char x, char y);
+	if (n == 1)  move(one, three);
+	else
 	{
-		if (prime(a))  //如果a是素数，在进行下一轮b的判断；
-		{
-			b = n - a;
-			if (prime(b))    //后调用
-				cout << n << "=" << a << "+" << b << endl;
-		}
+		hanoi(n - 1, one, three, two);  //总体上，先将n-1个盘子通过3从1移到2（中间又可细分为将n-2个盘子通过3从1移到2）--形成递归
+		move(one, three);                    //然后，将最大的盘子（底部盘子）直接从1移到3
+		hanoi(n - 1, two, one, three);   //最后，将n-1个盘子通过1从2移到3（中间又可细分为将n-2个盘子通过1从2移到3）--形成递归
 
 	}
 }
-
-bool prime(int m){          //外定义
-
-	int i;
-	double k = sqrt(m);
-	for (i = 2; i <=int(k); i++)
-
-	{
-		if (m%i == 0) break;  //如果存在一个数使n能够整除，则整个循环结束，跳出；
-	}
-		
-	if (i > k)   return 1;   //如果最后一个数也没能整除，则该语句执行
-       else      return 0;       //如果之前有数被整除，则该语句被执行
+void move(char x,char y){
+	cout << x << "-->" << y << endl;
+	
 }
