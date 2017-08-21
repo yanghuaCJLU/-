@@ -1,33 +1,40 @@
 #include<iostream>
 using namespace std;
 
-int main()
+struct Student   //创建结构体数据，同实现链表数据结构；
 {
-	void hanoi(int n, char one, char two, char three);//汉诺塔程序是递归精神的完全体现；
-	int m;
-	cout << "input the number 0f disks:";
-	cin >> m;
+	int num;
+	float  score;
+	Student *next;
+};
 
-	cout << "the steps of moveing " << m << "disks:" << endl;
-	hanoi(m, 'A', 'B', 'C');
+int main(){
+
+	Student stu1, stu2, stu3, *head, *p;   //静态链表就是有多少个节点，就需要先开辟/初始化多少个对象，然后在通过next属性链接成链表；
+	stu1.num = 101;                  
+	stu1.score = 76;      //动态链表则是只需开辟三个指针，一个指向头，一个指向末节点，一个指向未节点指向的下一个地址（为新创建节点准备）
+
+	stu2.num = 102;
+	stu2.score = 98;  
+
+	stu3.num = 103;
+	stu3.score = 100;
+
+	head = &stu1;  //将链表头赋给stu1
+	stu1.next = &stu2;
+	stu2.next = &stu3;
+	stu3.next = NULL; //未节点的下一地址赋空，链表结束；
+
+	p = head;  //初始化P指针，后面循环调用；避免head指针后移（不符合链表用法）
+
+	do
+	{
+		static int i = 1;  //i只能为静态变量或者在do外面初始化；
+		cout << "链表节点"<<i<<"的学号:" << p->num << "  分数：" << p->score << endl;
+		p = p->next; i++;
+	} while (p != NULL);
+
 
 	system("pause");
 	return 0;
-}
-
-void hanoi(int n, char one, char two, char three)
-{
-	void move(char x, char y);
-	if (n == 1)  move(one, three);
-	else
-	{
-		hanoi(n - 1, one, three, two);  //总体上，先将n-1个盘子通过3从1移到2（中间又可细分为将n-2个盘子通过3从1移到2）--形成递归
-		move(one, three);                    //然后，将最大的盘子（底部盘子）直接从1移到3
-		hanoi(n - 1, two, one, three);   //最后，将n-1个盘子通过1从2移到3（中间又可细分为将n-2个盘子通过1从2移到3）--形成递归
-
-	}
-}
-void move(char x,char y){
-	cout << x << "-->" << y << endl;
-	
 }
