@@ -1,40 +1,33 @@
 #include<iostream>
 using namespace std;
 
-struct Student   //创建结构体数据，同实现链表数据结构；
+int main()
 {
-	int num;
-	float  score;
-	Student *next;
-};
-
-int main(){
-
-	Student stu1, stu2, stu3, *head, *p;   //静态链表就是有多少个节点，就需要先开辟/初始化多少个对象，然后在通过next属性链接成链表；
-	stu1.num = 101;                  
-	stu1.score = 76;      //动态链表则是只需开辟三个指针，一个指向头，一个指向末节点，一个指向未节点指向的下一个地址（为新创建节点准备）
-
-	stu2.num = 102;
-	stu2.score = 98;  
-
-	stu3.num = 103;
-	stu3.score = 100;
-
-	head = &stu1;  //将链表头赋给stu1
-	stu1.next = &stu2;
-	stu2.next = &stu3;
-	stu3.next = NULL; //未节点的下一地址赋空，链表结束；
-
-	p = head;  //初始化P指针，后面循环调用；避免head指针后移（不符合链表用法）
-
-	do
+	const int n = 11;
+	int i, j, yhsj[n][n];
+	for (i = 1; i < n; i++)    //初始化--第一列、对角元素都赋值为1；
 	{
-		static int i = 1;  //i只能为静态变量或者在do外面初始化；
-		cout << "链表节点"<<i<<"的学号:" << p->num << "  分数：" << p->score << endl;
-		p = p->next; i++;
-	} while (p != NULL);
+		yhsj[i][1] = 1;
+		yhsj[i][i] = 1;
+	}
 
+	for (i = 3; i < n;i++)         //从第三行开始计算杨辉三角其他元素；
+	for (j = 2; j <= i - 1; j++)
+		yhsj[i][j] = yhsj[i - 1][j - 1] + yhsj[i - 1][j];
 
+	for (i = 1; i < n; i++)
+	{
+		for (j = 1; j <= i; j++)   //输出杨辉三角；
+		{
+			cout << yhsj[i][j]<<"  ";
+		}
+		cout << endl;
+	}
 	system("pause");
 	return 0;
 }
+
+//#include<iomanip>    主要是对cin,cout之类的一些操纵运算子; 例如 setw(n)设域宽为n个字符 。
+                      //这个控制符的意思是保证输出宽度为n。如：
+                     //cout << setw(3) << 1 << setw(3) << 10 << setw(3) << 100; 输出结果为
+                    //1 10100 （默认是右对齐）当输出长度大于3时(<< 1000)，setw(3)不起作用。
