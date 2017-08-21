@@ -3,31 +3,31 @@ using namespace std;
 
 int main()
 {
-	void hanoi(int n, char one, char two, char three);//汉诺塔程序是递归精神的完全体现；
-	int m;
-	cout << "input the number 0f disks:";
-	cin >> m;
+	const int n = 11;
+	int i, j, yhsj[n][n];
+	for (i = 1; i < n; i++)    //初始化--第一列、对角元素都赋值为1；
+	{
+		yhsj[i][1] = 1;
+		yhsj[i][i] = 1;
+	}
 
-	cout << "the steps of moveing " << m << "disks:" << endl;
-	hanoi(m, 'A', 'B', 'C');
+	for (i = 3; i < n;i++)         //从第三行开始计算杨辉三角其他元素；
+	for (j = 2; j <= i - 1; j++)
+		yhsj[i][j] = yhsj[i - 1][j - 1] + yhsj[i - 1][j];
 
+	for (i = 1; i < n; i++)
+	{
+		for (j = 1; j <= i; j++)   //输出杨辉三角；
+		{
+			cout << yhsj[i][j]<<"  ";
+		}
+		cout << endl;
+	}
 	system("pause");
 	return 0;
 }
 
-void hanoi(int n, char one, char two, char three)
-{
-	void move(char x, char y);
-	if (n == 1)  move(one, three);
-	else
-	{
-		hanoi(n - 1, one, three, two);  //总体上，先将n-1个盘子通过3从1移到2（中间又可细分为将n-2个盘子通过3从1移到2）--形成递归
-		move(one, three);                    //然后，将最大的盘子（底部盘子）直接从1移到3
-		hanoi(n - 1, two, one, three);   //最后，将n-1个盘子通过1从2移到3（中间又可细分为将n-2个盘子通过1从2移到3）--形成递归
-
-	}
-}
-void move(char x,char y){
-	cout << x << "-->" << y << endl;
-	
-}
+//#include<iomanip>    主要是对cin,cout之类的一些操纵运算子; 例如 setw(n)设域宽为n个字符 。
+                      //这个控制符的意思是保证输出宽度为n。如：
+                     //cout << setw(3) << 1 << setw(3) << 10 << setw(3) << 100; 输出结果为
+                    //1 10100 （默认是右对齐）当输出长度大于3时(<< 1000)，setw(3)不起作用。
