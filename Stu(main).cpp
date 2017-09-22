@@ -1,5 +1,7 @@
 #include"student.h"
 
+%github联系，，
+
 int main()
 {   
 	student *creat();
